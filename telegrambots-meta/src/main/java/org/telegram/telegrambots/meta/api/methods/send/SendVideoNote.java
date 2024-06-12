@@ -61,7 +61,6 @@ public class SendVideoNote extends SendMediaBotMethod<Message> {
      * Additional interface options.
      * A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard
      * or to force a reply from the user.
-     * @apiNote Not supported for messages sent on behalf of a business account
      */
     private ReplyKeyboard replyMarkup;
     /**
@@ -84,6 +83,11 @@ public class SendVideoNote extends SendMediaBotMethod<Message> {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     private String businessConnectionId;
+    /**
+     * Optional
+     * Unique identifier of the message effect to be added to the message
+     */
+    private String messageEffectId;
 
     @Tolerate
     public void setChatId(@NonNull Long chatId) {

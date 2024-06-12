@@ -19,6 +19,7 @@ import org.telegram.telegrambots.meta.api.objects.media.InputMediaAnimation;
 import org.telegram.telegrambots.meta.api.objects.media.InputMediaAudio;
 import org.telegram.telegrambots.meta.api.objects.media.InputMediaDocument;
 import org.telegram.telegrambots.meta.api.objects.message.Message;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException;
 
@@ -55,6 +56,8 @@ public class SendMediaGroup extends PartialBotApiMethod<ArrayList<Message>> {
     public static final String PROTECT_CONTENT_FIELD = "protect_content";
     public static final String REPLY_PARAMETERS_FIELD = "reply_parameters";
     public static final String BUSINESS_CONNECTION_ID_FIELD = "business_connection_id";
+    public static final String REPLY_MARKUP_FIELD = "reply_markup";
+    public static final String MESSAGE_EFFECT_ID_FIELD = "message_effect_id";
 
     /**
      * Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -102,6 +105,18 @@ public class SendMediaGroup extends PartialBotApiMethod<ArrayList<Message>> {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     private String businessConnectionId;
+    /**
+     * Optional.
+     * Additional interface options.
+     * A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard
+     * or to force a reply from the user.
+     */
+    private ReplyKeyboard replyMarkup;
+    /**
+     * Optional
+     * Unique identifier of the message effect to be added to the message
+     */
+    private String messageEffectId;
 
     @Tolerate
     public void setChatId(@NonNull Long chatId) {
@@ -155,6 +170,9 @@ public class SendMediaGroup extends PartialBotApiMethod<ArrayList<Message>> {
 
         if (replyParameters != null) {
             replyParameters.validate();
+        }
+        if (replyMarkup != null) {
+            replyMarkup.validate();
         }
     }
 

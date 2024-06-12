@@ -62,6 +62,7 @@ public class SendGame extends BotApiMethodMessage {
     private static final String PROTECTCONTENT_FIELD = "protect_content";
     private static final String REPLY_PARAMETERS_FIELD = "reply_parameters";
     private static final String BUSINESS_CONNECTION_ID_FIELD = "business_connection_id";
+    private static final String MESSAGE_EFFECT_ID_FIELD = "message_effect_id";
 
     @JsonProperty(CHATID_FIELD)
     @NonNull
@@ -84,7 +85,6 @@ public class SendGame extends BotApiMethodMessage {
      * Additional interface options.
      * A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard
      * or to force a reply from the user.
-     * @apiNote Not supported for messages sent on behalf of a business account
      */
     @JsonProperty(REPLY_MARKUP_FIELD)
     private ReplyKeyboard replyMarkup;
@@ -104,6 +104,12 @@ public class SendGame extends BotApiMethodMessage {
      */
     @JsonProperty(BUSINESS_CONNECTION_ID_FIELD)
     private String businessConnectionId;
+    /**
+     * Optional
+     * Unique identifier of the message effect to be added to the message
+     */
+    @JsonProperty(MESSAGE_EFFECT_ID_FIELD)
+    private String messageEffectId;
 
     @Tolerate
     public void setChatId(@NonNull Long chatId) {

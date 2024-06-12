@@ -47,13 +47,14 @@ public class SendMessage extends BotApiMethodMessage {
     private static final String DISABLEWEBPAGEPREVIEW_FIELD = "disable_web_page_preview";
     private static final String DISABLENOTIFICATION_FIELD = "disable_notification";
     private static final String REPLYTOMESSAGEID_FIELD = "reply_to_message_id";
-    private static final String REPLYMARKUP_FIELD = "reply_markup";
+    private static final String REPLY_MARKUP_FIELD = "reply_markup";
     private static final String ENTITIES_FIELD = "entities";
     private static final String ALLOWSENDINGWITHOUTREPLY_FIELD = "allow_sending_without_reply";
     private static final String PROTECTCONTENT_FIELD = "protect_content";
     private static final String LINK_PREVIEW_OPTIONS_FIELD = "link_preview_options";
     private static final String REPLY_PARAMETERS_FIELD = "reply_parameters";
     private static final String BUSINESS_CONNECTION_ID_FIELD = "business_connection_id";
+    private static final String MESSAGE_EFFECT_ID_FIELD = "message_effect_id";
 
     @JsonProperty(CHATID_FIELD)
     @NonNull
@@ -76,13 +77,12 @@ public class SendMessage extends BotApiMethodMessage {
     @JsonProperty(REPLYTOMESSAGEID_FIELD)
     private Integer replyToMessageId; ///< Optional. If the message is a reply, ID of the original message
     /**
-     * Optional.
+     * Optional
      * Additional interface options.
      * A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard
-     * or to force a reply from the user.
-     * @apiNote Not supported for messages sent on behalf of a business account
+     * or to force a reply from the user
      */
-    @JsonProperty(REPLYMARKUP_FIELD)
+    @JsonProperty(REPLY_MARKUP_FIELD)
     private ReplyKeyboard replyMarkup;
     @JsonProperty(ENTITIES_FIELD)
     private List<MessageEntity> entities; ///< Optional. List of special entities that appear in message text, which can be specified instead of parse_mode
@@ -108,6 +108,12 @@ public class SendMessage extends BotApiMethodMessage {
      */
     @JsonProperty(BUSINESS_CONNECTION_ID_FIELD)
     private String businessConnectionId;
+    /**
+     * Optional
+     * Unique identifier of the message effect to be added to the message
+     */
+    @JsonProperty(MESSAGE_EFFECT_ID_FIELD)
+    private String messageEffectId;
 
     @Tolerate
     public void setChatId(@NonNull Long chatId) {

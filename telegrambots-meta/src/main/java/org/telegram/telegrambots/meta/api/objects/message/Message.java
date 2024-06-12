@@ -12,7 +12,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import org.telegram.telegrambots.meta.api.objects.Audio;
-import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.chat.Chat;
 import org.telegram.telegrambots.meta.api.objects.ChatShared;
 import org.telegram.telegrambots.meta.api.objects.Contact;
 import org.telegram.telegrambots.meta.api.objects.Dice;
@@ -35,6 +35,7 @@ import org.telegram.telegrambots.meta.api.objects.VideoNote;
 import org.telegram.telegrambots.meta.api.objects.Voice;
 import org.telegram.telegrambots.meta.api.objects.WriteAccessAllowed;
 import org.telegram.telegrambots.meta.api.objects.boost.ChatBoostAdded;
+import org.telegram.telegrambots.meta.api.objects.chat.background.ChatBackground;
 import org.telegram.telegrambots.meta.api.objects.forum.ForumTopicClosed;
 import org.telegram.telegrambots.meta.api.objects.forum.ForumTopicCreated;
 import org.telegram.telegrambots.meta.api.objects.forum.ForumTopicEdited;
@@ -167,6 +168,9 @@ public class Message implements MaybeInaccessibleMessage {
     private static final String BUSINESS_CONNECTION_ID_FIELD = "business_connection_id";
     private static final String SENDER_BUSINESS_BOT_FIELD = "sender_business_bot";
     private static final String IS_FROM_OFFLINE_FIELD = "is_from_offline";
+    private static final String CHAT_BACKGROUND_SET_FIELD = "chat_background_set";
+    private static final String EFFECT_ID_FIELD = "effect_id";
+    private static final String SHOW_CAPTION_ABOVE_MEDIA_FIELD = "show_caption_above_media";
 
     /**
      * Integer	Unique message identifier
@@ -713,6 +717,24 @@ public class Message implements MaybeInaccessibleMessage {
      */
     @JsonProperty(IS_FROM_OFFLINE_FIELD)
     private Boolean isFromOffline;
+    /**
+     * Optional.
+     * Service message: chat background set
+     */
+    @JsonProperty(CHAT_BACKGROUND_SET_FIELD)
+    private ChatBackground chatBackgroundSet;
+    /**
+     * Optional.
+     * Unique identifier of the message effect added to the message
+     */
+    @JsonProperty(EFFECT_ID_FIELD)
+    private String effectId;
+    /**
+     * Optional.
+     * True, if the caption must be shown above the message media
+     */
+    @JsonProperty(SHOW_CAPTION_ABOVE_MEDIA_FIELD)
+    private Boolean showCaptionAboveMedia;
 
     public List<MessageEntity> getEntities() {
         if (entities != null) {
