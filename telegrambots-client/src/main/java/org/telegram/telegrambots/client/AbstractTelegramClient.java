@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMediaGroup;
+import org.telegram.telegrambots.meta.api.methods.send.SendPaidMedia;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendSticker;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
@@ -16,6 +17,7 @@ import org.telegram.telegrambots.meta.api.methods.stickers.CreateNewStickerSet;
 import org.telegram.telegrambots.meta.api.methods.stickers.ReplaceStickerInSet;
 import org.telegram.telegrambots.meta.api.methods.stickers.SetStickerSetThumbnail;
 import org.telegram.telegrambots.meta.api.methods.stickers.UploadStickerFile;
+import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageMedia;
 import org.telegram.telegrambots.meta.api.objects.File;
 import org.telegram.telegrambots.meta.api.objects.message.Message;
@@ -55,6 +57,15 @@ public abstract class AbstractTelegramClient implements TelegramClient {
             return executeAsync(sendPhoto).get();
         } catch (Exception e) {
             throw mapException(e, sendPhoto.getMethod());
+        }
+    }
+
+    @Override
+    public Boolean execute(SetWebhook setWebhook) throws TelegramApiException {
+        try {
+            return executeAsync(setWebhook).get();
+        } catch (Exception e) {
+            throw mapException(e, setWebhook.getMethod());
         }
     }
 
@@ -109,6 +120,15 @@ public abstract class AbstractTelegramClient implements TelegramClient {
             return executeAsync(sendMediaGroup).get();
         } catch (Exception e) {
             throw mapException(e, sendMediaGroup.getMethod());
+        }
+    }
+
+    @Override
+    public List<Message> execute(SendPaidMedia sendPaidMedia) throws TelegramApiException {
+        try {
+            return executeAsync(sendPaidMedia).get();
+        } catch (Exception e) {
+            throw mapException(e, sendPaidMedia.getMethod());
         }
     }
 

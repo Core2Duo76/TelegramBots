@@ -26,12 +26,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.experimental.Tolerate;
 import lombok.extern.jackson.Jacksonized;
 import org.telegram.telegrambots.meta.api.interfaces.BotApiObject;
 import org.telegram.telegrambots.meta.api.objects.PhotoSize;
 
 /**
  * This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).
+ *
  * @author Ruben Bermudez
  * @version 2.4
  */
@@ -45,27 +47,27 @@ import org.telegram.telegrambots.meta.api.objects.PhotoSize;
 @Jacksonized
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Animation implements BotApiObject {
-    private static final String FILEID_FIELD = "file_id";
-    private static final String FILEUNIQUEID_FIELD = "file_unique_id";
+    private static final String FILE_ID_FIELD = "file_id";
+    private static final String FILE_UNIQUE_ID_FIELD = "file_unique_id";
     private static final String WIDTH_FIELD = "width";
     private static final String HEIGHT_FIELD = "height";
     private static final String DURATION_FIELD = "duration";
     private static final String THUMBNAIL_FIELD = "thumbnail";
-    private static final String FILENAME_FIELD = "file_name";
-    private static final String MIMETYPE_FIELD = "mime_type";
-    private static final String FILESIZE_FIELD = "file_size";
+    private static final String FILE_NAME_FIELD = "file_name";
+    private static final String MIME_TYPE_FIELD = "mime_type";
+    private static final String FILE_SIZE_FIELD = "file_size";
 
     /**
      * Identifier for this file, which can be used to download or reuse the file
      */
-    @JsonProperty(FILEID_FIELD)
+    @JsonProperty(FILE_ID_FIELD)
     @NonNull
     private String fileId;
     /**
      * Unique identifier for this file, which is supposed to be the same over time and for different bots.
      * Can't be used to download or reuse the file.
      */
-    @JsonProperty(FILEUNIQUEID_FIELD)
+    @JsonProperty(FILE_UNIQUE_ID_FIELD)
     @NonNull
     private String fileUniqueId;
     /**
@@ -96,21 +98,52 @@ public class Animation implements BotApiObject {
      * Optional.
      * Original animation filename as defined by sender
      */
-    @JsonProperty(FILENAME_FIELD)
+    @JsonProperty(FILE_NAME_FIELD)
     private String fileName;
     /**
      * Optional.
      * MIME type of the file as defined by sender
      */
-    @JsonProperty(MIMETYPE_FIELD)
-    private String mimetype;
+    @JsonProperty(MIME_TYPE_FIELD)
+    private String mimeType;
     /**
      * Optional.
      * File size in bytes.
      * It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it.
      * But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
      */
-    @JsonProperty(FILESIZE_FIELD)
+    @JsonProperty(FILE_SIZE_FIELD)
     private Long fileSize;
+
+    /**
+     * @deprecated Use {{@link #getMimeType()}} instead
+     */
+    @Deprecated
+    @Tolerate
+    public String getMimetype() {
+        return mimeType;
+    }
+
+    /**
+     * @deprecated Use {{@link #setMimeType(String)}} instead
+     */
+    @Deprecated
+    @Tolerate
+    public void setMimetype(String mimetype) {
+        this.mimeType = mimetype;
+    }
+
+    public static abstract class AnimationBuilder<C extends Animation, B extends AnimationBuilder<C, B>> {
+
+        /**
+         * @deprecated Use {{@link #mimeType(String)}} instead
+         */
+        @Deprecated
+        @Tolerate
+        public B mimetype(String mimetype) {
+            this.mimeType = mimetype;
+            return self();
+        }
+    }
 
 }

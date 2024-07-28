@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMediaGroup;
+import org.telegram.telegrambots.meta.api.methods.send.SendPaidMedia;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendSticker;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
@@ -16,6 +17,7 @@ import org.telegram.telegrambots.meta.api.methods.stickers.CreateNewStickerSet;
 import org.telegram.telegrambots.meta.api.methods.stickers.ReplaceStickerInSet;
 import org.telegram.telegrambots.meta.api.methods.stickers.SetStickerSetThumbnail;
 import org.telegram.telegrambots.meta.api.methods.stickers.UploadStickerFile;
+import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageMedia;
 import org.telegram.telegrambots.meta.api.objects.File;
 import org.telegram.telegrambots.meta.api.objects.message.Message;
@@ -36,6 +38,8 @@ public interface TelegramClient {
     Message execute(SendDocument sendDocument) throws TelegramApiException;
 
     Message execute(SendPhoto sendPhoto) throws TelegramApiException;
+
+    Boolean execute(SetWebhook setWebhook) throws TelegramApiException;
 
     Message execute(SendVideo sendVideo) throws TelegramApiException;
 
@@ -69,6 +73,14 @@ public interface TelegramClient {
      * @see <a href="https://core.telegram.org/bots/api#sendMediaGroup">https://core.telegram.org/bots/api#sendMediaGroup</a>
      */
     List<Message> execute(SendMediaGroup sendMediaGroup) throws TelegramApiException;
+
+    /**
+     * Send a paid media
+     * @return If success, list of generated messages
+     * @throws TelegramApiException If there is any error sending the media group
+     * @see <a href="https://core.telegram.org/bots/api#sendMediaGroup">https://core.telegram.org/bots/api#sendMediaGroup</a>
+     */
+    List<Message> execute(SendPaidMedia sendPaidMedia) throws TelegramApiException;
 
     /**
      * Set chat profile photo
@@ -134,12 +146,14 @@ public interface TelegramClient {
 
     java.io.File downloadFile(File file) throws TelegramApiException;
 
+    @SuppressWarnings("unused")
     default java.io.File downloadFile(String filePath) throws TelegramApiException {
         return downloadFile(new File(null, null, null, filePath));
     }
 
     InputStream downloadFileAsStream(File file) throws TelegramApiException;
 
+    @SuppressWarnings("unused")
     default InputStream downloadFileAsStream(String filePath) throws TelegramApiException {
         return downloadFileAsStream(new File(null, null, null, filePath));
     }
@@ -155,6 +169,8 @@ public interface TelegramClient {
     CompletableFuture<Message> executeAsync(SendDocument sendDocument);
 
     CompletableFuture<Message> executeAsync(SendPhoto sendPhoto);
+
+    CompletableFuture<Boolean> executeAsync(SetWebhook setWebhook);
 
     CompletableFuture<Message> executeAsync(SendVideo sendVideo);
 
@@ -183,6 +199,13 @@ public interface TelegramClient {
      * @see <a href="https://core.telegram.org/bots/api#sendMediaGroup">https://core.telegram.org/bots/api#sendMediaGroup</a>
      */
     CompletableFuture<List<Message>> executeAsync(SendMediaGroup sendMediaGroup);
+
+    /**
+     * Send a paid media
+     * @return If success, list of generated messages
+     * @see <a href="https://core.telegram.org/bots/api#sendMediaGroup">https://core.telegram.org/bots/api#sendMediaGroup</a>
+     */
+    CompletableFuture<List<Message>> executeAsync(SendPaidMedia sendPaidMedia);
 
     /**
      * Set chat profile photo
@@ -248,12 +271,14 @@ public interface TelegramClient {
 
     CompletableFuture<java.io.File> downloadFileAsync(File file);
 
+    @SuppressWarnings("unused")
     default CompletableFuture<java.io.File> downloadFileAsync(String filePath) {
         return downloadFileAsync(new File(null, null, null, filePath));
-    };
+    }
 
     CompletableFuture<InputStream> downloadFileAsStreamAsync(File file);
 
+    @SuppressWarnings("unused")
     default CompletableFuture<InputStream> downloadFileAsStreamAsync(String filePath) {
         return downloadFileAsStreamAsync(new File(null, null, null, filePath));
     }

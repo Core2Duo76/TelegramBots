@@ -12,7 +12,6 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import org.telegram.telegrambots.meta.api.objects.Audio;
-import org.telegram.telegrambots.meta.api.objects.chat.Chat;
 import org.telegram.telegrambots.meta.api.objects.ChatShared;
 import org.telegram.telegrambots.meta.api.objects.Contact;
 import org.telegram.telegrambots.meta.api.objects.Dice;
@@ -35,6 +34,7 @@ import org.telegram.telegrambots.meta.api.objects.VideoNote;
 import org.telegram.telegrambots.meta.api.objects.Voice;
 import org.telegram.telegrambots.meta.api.objects.WriteAccessAllowed;
 import org.telegram.telegrambots.meta.api.objects.boost.ChatBoostAdded;
+import org.telegram.telegrambots.meta.api.objects.chat.Chat;
 import org.telegram.telegrambots.meta.api.objects.chat.background.ChatBackground;
 import org.telegram.telegrambots.meta.api.objects.forum.ForumTopicClosed;
 import org.telegram.telegrambots.meta.api.objects.forum.ForumTopicCreated;
@@ -51,7 +51,9 @@ import org.telegram.telegrambots.meta.api.objects.giveaway.GiveawayWinners;
 import org.telegram.telegrambots.meta.api.objects.messageorigin.MessageOrigin;
 import org.telegram.telegrambots.meta.api.objects.passport.PassportData;
 import org.telegram.telegrambots.meta.api.objects.payments.Invoice;
+import org.telegram.telegrambots.meta.api.objects.payments.RefundedPayment;
 import org.telegram.telegrambots.meta.api.objects.payments.SuccessfulPayment;
+import org.telegram.telegrambots.meta.api.objects.payments.paidmedia.PaidMediaInfo;
 import org.telegram.telegrambots.meta.api.objects.polls.Poll;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.stickers.Sticker;
@@ -171,6 +173,8 @@ public class Message implements MaybeInaccessibleMessage {
     private static final String CHAT_BACKGROUND_SET_FIELD = "chat_background_set";
     private static final String EFFECT_ID_FIELD = "effect_id";
     private static final String SHOW_CAPTION_ABOVE_MEDIA_FIELD = "show_caption_above_media";
+    private static final String PAID_MEDIA_FIELD = "paid_media";
+    private static final String REFUNDED_PAYMENT_FIELD = "refunded_payment";
 
     /**
      * Integer	Unique message identifier
@@ -735,6 +739,18 @@ public class Message implements MaybeInaccessibleMessage {
      */
     @JsonProperty(SHOW_CAPTION_ABOVE_MEDIA_FIELD)
     private Boolean showCaptionAboveMedia;
+    /**
+     * 	Optional.
+     * 	Message contains paid media; information about the paid media
+     */
+    @JsonProperty(PAID_MEDIA_FIELD)
+    private PaidMediaInfo paidMedia;
+    /**
+     * 	Optional.
+     * 	Message is a service message about a refunded payment, information about the payment.
+     */
+    @JsonProperty(REFUNDED_PAYMENT_FIELD)
+    private RefundedPayment refundedPayment;
 
     public List<MessageEntity> getEntities() {
         if (entities != null) {
@@ -843,7 +859,7 @@ public class Message implements MaybeInaccessibleMessage {
     }
 
     @JsonIgnore
-    private boolean hasGame() {
+    public boolean hasGame() {
         return game != null;
     }
 
@@ -908,77 +924,87 @@ public class Message implements MaybeInaccessibleMessage {
     }
 
     @JsonIgnore
-    private boolean hasMessageAutoDeleteTimerChanged() {
+    public boolean hasMessageAutoDeleteTimerChanged() {
         return messageAutoDeleteTimerChanged != null;
     }
 
     @JsonIgnore
-    private boolean hasWebAppData() {
+    public boolean hasWebAppData() {
         return webAppData != null;
     }
 
     @JsonIgnore
-    private boolean hasVideoChatStarted() {
+    public boolean hasVideoChatStarted() {
         return videoChatStarted != null;
     }
 
     @JsonIgnore
-    private boolean hasVideoChatEnded() {
+    public boolean hasVideoChatEnded() {
         return videoChatEnded != null;
     }
 
     @JsonIgnore
-    private boolean hasVideoChatScheduled() {
+    public boolean hasVideoChatScheduled() {
         return videoChatScheduled != null;
     }
 
     @JsonIgnore
-    private boolean hasVideoChatParticipantsInvited() {
+    public boolean hasVideoChatParticipantsInvited() {
         return videoChatParticipantsInvited != null;
     }
 
     @JsonIgnore
-    private boolean hasForumTopicCreated() {
+    public boolean hasForumTopicCreated() {
         return forumTopicCreated != null;
     }
 
     @JsonIgnore
-    private boolean hasForumTopicClosed() {
+    public boolean hasForumTopicClosed() {
         return forumTopicClosed != null;
     }
 
     @JsonIgnore
-    private boolean hasForumTopicReopened() {
+    public boolean hasForumTopicReopened() {
         return forumTopicReopened != null;
     }
 
     @JsonIgnore
-    private boolean hasUserShared() {
+    public boolean hasUserShared() {
         return userShared != null;
     }
 
     @JsonIgnore
-    private boolean hasChatShared() {
+    public boolean hasChatShared() {
         return chatShared != null;
     }
 
     @JsonIgnore
-    private boolean hasStory() {
+    public boolean hasStory() {
         return story != null;
     }
 
     @JsonIgnore
-    private boolean hasWriteAccessAllowed() {
+    public boolean hasWriteAccessAllowed() {
         return writeAccessAllowed != null;
     }
 
     @JsonIgnore
-    private boolean hasReplyToStory() {
+    public boolean hasReplyToStory() {
         return replyToStory != null;
     }
 
     @JsonIgnore
-    private boolean hasBoostAdded() {
+    public boolean hasBoostAdded() {
         return boostAdded != null;
+    }
+
+    @JsonIgnore
+    public boolean hasPaidMedia() {
+        return paidMedia != null;
+    }
+
+    @JsonIgnore
+    public boolean hasCaption() {
+        return caption != null;
     }
 }
