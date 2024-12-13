@@ -1,6 +1,7 @@
 package org.telegram.telegrambots.meta.api.methods.stickers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -14,6 +15,7 @@ import org.telegram.telegrambots.meta.api.objects.File;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException;
+import org.telegram.telegrambots.meta.util.Validations;
 
 import java.util.Arrays;
 
@@ -32,6 +34,7 @@ import java.util.Arrays;
 @SuperBuilder
 @Jacksonized
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UploadStickerFile extends PartialBotApiMethod<File> {
     public static final String PATH = "uploadStickerFile";
 
@@ -69,9 +72,7 @@ public class UploadStickerFile extends PartialBotApiMethod<File> {
 
     @Override
     public void validate() throws TelegramApiValidationException {
-        if (userId <= 0) {
-            throw new TelegramApiValidationException("userId can't be empty", this);
-        }
+        Validations.requiredUserId(userId, this);
         if (stickerFormat.isEmpty() || !Arrays.asList("static", "animated", "video").contains(stickerFormat)) {
             throw new TelegramApiValidationException("Sticker Format must be one of 'static', 'animated', 'video'", this);
         }

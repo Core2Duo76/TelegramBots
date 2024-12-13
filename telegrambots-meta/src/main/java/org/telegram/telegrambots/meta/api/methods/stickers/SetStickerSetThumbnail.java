@@ -1,6 +1,7 @@
 package org.telegram.telegrambots.meta.api.methods.stickers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import lombok.extern.jackson.Jacksonized;
 import org.telegram.telegrambots.meta.api.methods.botapimethods.BotApiMethodBoolean;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException;
+import org.telegram.telegrambots.meta.util.Validations;
 
 import java.util.Arrays;
 
@@ -32,6 +34,7 @@ import java.util.Arrays;
 @SuperBuilder
 @Jacksonized
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SetStickerSetThumbnail extends BotApiMethodBoolean {
     public static final String PATH = "setStickerSetThumbnail";
 
@@ -84,9 +87,7 @@ public class SetStickerSetThumbnail extends BotApiMethodBoolean {
         if (name.isEmpty()) {
             throw new TelegramApiValidationException("name can't be null", this);
         }
-        if (userId <= 0) {
-            throw new TelegramApiValidationException("userId can't be null", this);
-        }
+        Validations.requiredUserId(userId, this);
         if (!Arrays.asList("static", "animated", "video").contains(format)) {
             throw new TelegramApiValidationException("Format must be 'static', 'animated', 'video'", this);
         }

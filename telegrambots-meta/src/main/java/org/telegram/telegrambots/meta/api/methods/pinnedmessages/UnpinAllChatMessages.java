@@ -1,6 +1,7 @@
 package org.telegram.telegrambots.meta.api.methods.pinnedmessages;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import lombok.experimental.Tolerate;
 import lombok.extern.jackson.Jacksonized;
 import org.telegram.telegrambots.meta.api.methods.botapimethods.BotApiMethodBoolean;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException;
+import org.telegram.telegrambots.meta.util.Validations;
 
 /**
  * @author Ruben Bermudez
@@ -32,6 +34,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException;
 @SuperBuilder
 @Jacksonized
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UnpinAllChatMessages extends BotApiMethodBoolean {
     public static final String PATH = "unpinAllChatMessages";
 
@@ -53,9 +56,7 @@ public class UnpinAllChatMessages extends BotApiMethodBoolean {
 
     @Override
     public void validate() throws TelegramApiValidationException {
-        if (chatId.isEmpty()) {
-            throw new TelegramApiValidationException("ChatId parameter can't be empty", this);
-        }
+        Validations.requiredChatId(chatId, this);
     }
 
     public static abstract class UnpinAllChatMessagesBuilder<C extends UnpinAllChatMessages, B extends UnpinAllChatMessagesBuilder<C, B>> extends BotApiMethodBooleanBuilder<C, B> {

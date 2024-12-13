@@ -19,10 +19,10 @@ import java.util.List;
  *
  * A method of Telegram Bots Api that is fully supported in json format
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class BotApiMethodSerializable extends BotApiMethod<Serializable> {
     public Serializable deserializeResponseMessageOrBoolean(String answer) throws TelegramApiRequestException {
         return deserializeResponseFromPossibilities(answer, Arrays.asList(Message.class, Boolean.class));
