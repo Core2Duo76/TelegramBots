@@ -14,10 +14,10 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
  *
  * A method of Telegram Bots Api that is fully supported in json format
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class BotApiMethodMessage extends BotApiMethod<Message> {
     @Override
     public Message deserializeResponse(String answer) throws TelegramApiRequestException {
