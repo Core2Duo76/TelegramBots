@@ -12,6 +12,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import org.telegram.telegrambots.meta.api.interfaces.BotApiObject;
+import org.telegram.telegrambots.meta.api.objects.photo.PhotoSize;
 
 import java.util.List;
 
@@ -105,6 +106,6 @@ public class Video implements BotApiObject {
      * Optional.
      * Timestamp in seconds from which the video will play in the message
      */
-    @JsonProperty(FILE_NAME_FIELD)
+    @JsonProperty(START_TIMESTAMP_FIELD)
     private Integer startTimestamp;
 }
