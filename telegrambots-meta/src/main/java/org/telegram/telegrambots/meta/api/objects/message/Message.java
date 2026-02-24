@@ -34,6 +34,8 @@ import org.telegram.telegrambots.meta.api.objects.Voice;
 import org.telegram.telegrambots.meta.api.objects.WriteAccessAllowed;
 import org.telegram.telegrambots.meta.api.objects.boost.ChatBoostAdded;
 import org.telegram.telegrambots.meta.api.objects.chat.Chat;
+import org.telegram.telegrambots.meta.api.objects.chat.ChatOwnerChanged;
+import org.telegram.telegrambots.meta.api.objects.chat.ChatOwnerLeft;
 import org.telegram.telegrambots.meta.api.objects.chat.background.ChatBackground;
 import org.telegram.telegrambots.meta.api.objects.checklist.Checklist;
 import org.telegram.telegrambots.meta.api.objects.checklist.ChecklistTasksAdded;
@@ -190,6 +192,7 @@ public class Message implements MaybeInaccessibleMessage {
     private static final String REFUNDED_PAYMENT_FIELD = "refunded_payment";
     private static final String GIFT_FIELD = "gift";
     private static final String UNIQUE_GIFT_FIELD = "unique_gift";
+    private static final String GIFT_UPGRADE_SENT_FIELD = "gift_upgrade_sent";
     private static final String PAID_MESSAGE_PRICE_CHANGED_FIELD = "paid_message_price_changed";
     private static final String PAID_STAR_COUNT_FIELD = "paid_star_count";
     private static final String DIRECT_MESSAGE_PRICE_CHANGED_FIELD = "direct_message_price_changed";
@@ -205,6 +208,8 @@ public class Message implements MaybeInaccessibleMessage {
     private static final String SUGGESTED_POST_DECLINED_FIELD = "suggested_post_declined";
     private static final String SUGGESTED_POST_PAID_FIELD = "suggested_post_paid";
     private static final String SUGGESTED_POST_REFUNDED_FIELD = "suggested_post_refunded";
+    private static final String CHAT_OWNER_LEFT_FIELD = "chat_owner_left";
+    private static final String CHAT_OWNER_CHANGED_FIELD = "chat_owner_changed";
 
     /**
      * Unique message identifier inside this chat. In specific instances (e.g., message containing a video sent to a big chat),
@@ -215,8 +220,8 @@ public class Message implements MaybeInaccessibleMessage {
     private Integer messageId;
     /**
      * Optional.
-     * Unique identifier of a message thread or a forum topic to which the message belongs;
-     * for supergroups only
+     * Unique identifier of a message thread or forum topic to which the message belongs;
+     * for supergroups and private chats only
      */
     @JsonProperty(MESSAGE_THREAD_ID_FIELD)
     private Integer messageThreadId;
@@ -591,7 +596,7 @@ public class Message implements MaybeInaccessibleMessage {
     private VideoChatScheduled videoChatScheduled;
     /**
      * Optional.
-     * True, if the message is sent to a forum topic
+     * True, if the message is sent to a topic in a forum supergroup or a private chat with the bot
      */
     @JsonProperty(IS_TOPIC_MESSAGE_FIELD)
     private Boolean isTopicMessage;
@@ -800,6 +805,12 @@ public class Message implements MaybeInaccessibleMessage {
     private UniqueGiftInfo uniqueGift;
     /**
      * 	Optional.
+     * 	Service message: upgrade of a gift was purchased after the gift was sent
+     */
+    @JsonProperty(GIFT_UPGRADE_SENT_FIELD)
+    private GiftInfo giftUpgradeSent;
+    /**
+     * 	Optional.
      * 	Service message: the price for paid messages has changed in the chat
      */
     @JsonProperty(PAID_MESSAGE_PRICE_CHANGED_FIELD)
@@ -890,6 +901,18 @@ public class Message implements MaybeInaccessibleMessage {
      */
     @JsonProperty(SUGGESTED_POST_REFUNDED_FIELD)
     private SuggestedPostRefunded suggestedPostRefunded;
+    /**
+     * Optional.
+     * Service message: chat owner has left
+     */
+    @JsonProperty(CHAT_OWNER_LEFT_FIELD)
+    private ChatOwnerLeft chatOwnerLeft;
+    /**
+     * Optional.
+     * Service message: chat owner has changed
+     */
+    @JsonProperty(CHAT_OWNER_CHANGED_FIELD)
+    private ChatOwnerChanged chatOwnerChanged;
 
     public List<MessageEntity> getEntities() {
         if (entities != null) {
@@ -1231,4 +1254,16 @@ public class Message implements MaybeInaccessibleMessage {
     public boolean hasSuggestedPostRefunded() {
         return suggestedPostRefunded != null;
     }
+
+    @JsonIgnore
+    public boolean hasChatOwnerChanged() {
+        return chatOwnerChanged != null;
+    }
+
+    @JsonIgnore
+    public boolean hasChatOwnerLeft() {
+        return chatOwnerLeft != null;
+    }
+
+
 }
