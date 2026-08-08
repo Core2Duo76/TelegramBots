@@ -14,7 +14,9 @@ import org.telegram.telegrambots.meta.api.objects.Audio;
 import org.telegram.telegrambots.meta.api.objects.Birthdate;
 import org.telegram.telegrambots.meta.api.objects.ChatLocation;
 import org.telegram.telegrambots.meta.api.objects.ChatPermissions;
+import org.telegram.telegrambots.meta.api.objects.community.Community;
 import org.telegram.telegrambots.meta.api.objects.ChatPhoto;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.UserRating;
 import org.telegram.telegrambots.meta.api.objects.business.BusinessIntro;
 import org.telegram.telegrambots.meta.api.objects.business.BusinessLocation;
@@ -86,6 +88,8 @@ public class ChatFullInfo extends Chat {
     private static final String UNIQUE_GIFT_COLORS_FIELD = "unique_gift_colors";
     private static final String PAID_MESSAGE_STAR_COUNT_FIELD = "paid_message_star_count";
     private static final String FIRST_PROFILE_AUDIO_FIELD = "first_profile_audio";
+    private static final String GUARD_BOT_FIELD = "guard_bot";
+    private static final String COMMUNITY_FIELD = "community";
 
     /**
      * Optional.
@@ -383,4 +387,17 @@ public class ChatFullInfo extends Chat {
      */
     @JsonProperty(FIRST_PROFILE_AUDIO_FIELD)
     private Audio firstProfileAudio;
+    /**
+     * Optional.
+     * The bot that processes join request queries in the chat.
+     * The field is only available to chat administrators.
+     */
+    @JsonProperty(GUARD_BOT_FIELD)
+    private User guardBot;
+    /**
+     * Optional.
+     * The Community to which the chat belongs
+     */
+    @JsonProperty(COMMUNITY_FIELD)
+    private Community community;
 }
